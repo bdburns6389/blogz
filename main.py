@@ -19,6 +19,11 @@ class Blog(db.Model):
         self.title = title
         self.body = body
 
+class User(db.model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(120))
+    password = db.Column(db.String(120))
+    blogs = db.
 
 @app.route('/newpost', methods=['POST', 'GET'])
 def newpost():
