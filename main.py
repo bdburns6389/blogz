@@ -21,7 +21,7 @@ class Blog(db.Model):
         self.body = body
         self.owner = owner
 
-class User(db.model):
+class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(120))
     password = db.Column(db.String(120))
@@ -30,11 +30,11 @@ class User(db.model):
     def __init__(self, username, password):
         self.username = username
         self.password = password
-        
+
 
 @app.route('/newpost', methods=['POST', 'GET'])
 def newpost():
-    #Still commits everything to database, rearrange if statements to make this work correctly.
+    #Need to add blog.owner to this route, but is it a hidden value?
     title_error = ""
     body_error = ""
     if request.method == 'POST':
