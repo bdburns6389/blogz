@@ -31,10 +31,21 @@ class User(db.Model):
         self.username = username
         self.password = password
 
+#WORK HERE!!!! Use Get it Done as a boilerplate!
+@app.route('/login', methods=['POST', 'GET'])
+def login():
+    pass
+
+@app.route('/signup', methods=['POST', 'GET'])
+def signup():
+    pass
 
 @app.route('/newpost', methods=['POST', 'GET'])
 def newpost():
     #Need to add blog.owner to this route, but is it a hidden value?
+    blog_owner = User.query.filter_by(username=session['username']).first() '''This will need to relate to
+    SESSIONS before it will work.  Make sure to use username (similar to email in the get it done video)
+    Will also need to be put in like blog_owner=blog_owner in a .query somewhere.'''
     title_error = ""
     body_error = ""
     if request.method == 'POST':
@@ -45,7 +56,7 @@ def newpost():
         if len(blog_body) < 1:
             body_error = "Please enter a Body for your Blog."
         if not title_error and not body_error:
-            new_entry = Blog(blog_title, blog_body)
+            new_entry = Blog(blog_title, blog_body, blog_owner)
             db.session.add(new_entry)
             db.session.commit()
             return redirect('/blog?id='+str(new_entry.id))  #Accesses id attribute
