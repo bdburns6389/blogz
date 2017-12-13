@@ -16,7 +16,7 @@ class Blog(db.Model):
     body = db.Column(db.String(1200))
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-    def __init__(self,title,body, owner):
+    def __init__(self, title, body, owner):
         self.title = title
         self.body = body
         self.owner = owner
