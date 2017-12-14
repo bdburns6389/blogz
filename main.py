@@ -55,7 +55,7 @@ def signup():
         password = request.form['password']
         verify = request.form['verify']  #Verify needs to be used somewhere. Or does it?
 
-        #TODO Validate Data
+        #TODO Validate Data, using verify request data.
 
         existing_user = User.query.filter_by(username=username).first()
         if not existing_user:
