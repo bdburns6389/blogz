@@ -34,11 +34,41 @@ class User(db.Model):
 #WORK HERE!!!! Use Get it Done as a boilerplate!
 @app.route('/login', methods=['POST', 'GET'])
 def login():
-    pass
+    """Taken from get-it-done, may need modification."""
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        user = User.query.filter_by(username=username).first()
+        if user and user.password == password:
+            session['username'] = username
+            flash('Logged In')
+            return redirect('/') #WHERE SHOULD THIS REDIRECT TO?????
+        else:
+            flash('User Password Incorrect, or User Does Not Exist', 'error')
+    return render_template('login.html')
 
 @app.route('/signup', methods=['POST', 'GET'])
 def signup():
-    pass
+    '''Taken from get-it-done, may need modification, check indentation levels.'''
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        verify = request.form['verify']  #Verify needs to be used somewhere. Or does it?
+
+        #TODO Validate Data
+
+        existing_user = User.query.filter_by(username=username).first()
+        if not existing_user:
+            new_user = User(username, password)
+            db.session.add(new_user)
+            db.session.commit()
+            session['username'] = username
+            return redirect('/')
+        else:
+            #TODO message that says already exists in database
+            return '<h1>Duplicate User</h1>'
+
+    return render_template('signup.html')
 
 @app.route('/newpost', methods=['POST', 'GET'])
 def newpost():
