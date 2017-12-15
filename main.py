@@ -33,7 +33,7 @@ class User(db.Model):
 
 @app.before_request  #Are the allowed routes correct?
 def require_login():
-    allowed_routes = ['login', 'signup']
+    allowed_routes = ['login', 'signup', 'blog', 'index']
     if request.endpoint not in allowed_routes and 'signup' not in session:
         return redirect('/login')
 
@@ -122,7 +122,7 @@ def blog():
         return render_template('blog.html', entries=entries)
 
 
-@app.route('/', methods=['POST', 'GET'])
+@app.route('/', methods=['POST', 'GET']) #Should be able to change to match new assignment.
 def index():
     entries = Blog.query.all()
     return render_template('blog.html', entries=entries)
