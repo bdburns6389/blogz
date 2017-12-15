@@ -31,6 +31,12 @@ class User(db.Model):
         self.username = username
         self.password = password
 
+@app.before_request  #Are the allowed routes correct?
+def require_login():
+    allowed_routes = ['login', 'signup']
+    if request.endpoint not in allowed_routes and 'signup' not in session:
+        return redirect('/login')
+
 #WORK HERE!!!! Use Get it Done as a boilerplate!
 @app.route('/login', methods=['POST', 'GET'])
 def login():
@@ -69,6 +75,11 @@ def signup():
             return '<h1>Duplicate User</h1>'
 
     return render_template('signup.html')
+
+@app.route('/logout')
+def logout():
+    del session['username']
+    return redirect('/')
 
 @app.route('/newpost', methods=['POST', 'GET'])
 def newpost():
