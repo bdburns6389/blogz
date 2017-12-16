@@ -1,0 +1,27 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Blog Post</h1>
+
+
+    <form action="/newpost" method="post"> <!--action will be for which route you have function on.-->
+        <label for="blog_title">Blog Title: </label><br>
+        <input type="text" name="blog_title" value="{{blog_title}}">
+        {% if title_error %}
+        <span class='error'>{{ title_error }}</span>
+        {% endif %}
+        <p>
+        <label for="blog_body">Blog Body: </label><br>
+        <input type="text" name="blog_body" value="{{blog_body}}"></input>
+        {% if body_error %}
+        <span class='error'>{{ body_error }}</span>
+        {% endif %}
+        <br>
+        <br>
+        <input type="submit" value="Submit"/>
+        </p>
+    </form>
+
+{% endblock %}

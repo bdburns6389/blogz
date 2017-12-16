@@ -33,25 +33,27 @@ class User(db.Model):
 
 @app.before_request  #Are the allowed routes correct?
 def require_login():
-    allowed_routes = ['login', 'signup', 'blog', 'index']
-    if request.endpoint not in allowed_routes and 'signup' not in session:
+    allowed_routes = ['login', 'signup', 'blog', 'index',]
+    if request.endpoint not in allowed_routes and 'username' not in session:
         return redirect('/login')
 
-#WORK HERE!!!! Use Get it Done as a boilerplate!
+
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     """Taken from get-it-done, may need modification."""
+    print(request.method)
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
         user = User.query.filter_by(username=username).first()
+        print(user)
         if user and user.password == password:
             session['username'] = username
-            flash('Logged In')
-            return redirect('/') #WHERE SHOULD THIS REDIRECT TO?????
+            return redirect('/newpost')
         else:
-            flash('User Password Incorrect, or User Does Not Exist', 'error')
-    return render_template('login.html')
+            return '<h1>Wrong</h1>' #What should this actually return?
+    else:
+        return render_template('login.html')
 
 @app.route('/signup', methods=['POST', 'GET'])
 def signup():
@@ -107,7 +109,8 @@ def newpost():
                                    blog_body=blog_body, title_error=title_error,
                                    body_error=body_error)
 
-    return render_template('newpost.html')
+    else:
+        return render_template('newpost.html')
 
 
 
@@ -124,8 +127,7 @@ def blog():
 
 @app.route('/', methods=['POST', 'GET']) #Should be able to change to match new assignment.
 def index():
-    entries = Blog.query.all()
-    return render_template('blog.html', entries=entries)
+    return render_template('index.html')
 
 if __name__ == "__main__":
     app.run()
