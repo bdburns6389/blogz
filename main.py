@@ -81,12 +81,12 @@ def signup():
 @app.route('/logout')
 def logout():
     del session['username']
-    return redirect('/')
+    return redirect('/blog')
 
 @app.route('/newpost', methods=['POST', 'GET'])
 def newpost():
     #Need to add blog.owner to this route, but is it a hidden value?
-    blog_owner = User.query.filter_by(username=session['username']).first() 
+    blog_owner = User.query.filter_by(username=session['username']).first()
     #This will need to relate toSESSIONS before it will work.
     # Make sure to use username (similar to email in the get it done video)
     #Will also need to be put in like blog_owner=blog_owner in a .query somewhere.

@@ -9,18 +9,20 @@
             .title {
                 text-align: center;
             }
+            .right {
+                float: right;
+            }
         </style>
     </head>
 <body>
 
-    <div>
+    <nav>
         <a href='/blog'>Main Blog Page</a>
         <span><a href='/newpost'>Add a New Entry</a></span>
-    </div>
-    <div>
-        <a href='/login'>Login</a>
-        <a href='/signup'>Signup</a>
-    </div>
+
+        <span><a href='/login'>Login</a></span>
+        <span><a href='/logout'>Logout</a></span>
+    </nav>
 
     {% block content %}
     {% endblock %}
