@@ -41,12 +41,10 @@ def require_login():
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     """Taken from get-it-done, may need modification."""
-    print(request.method)
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
         user = User.query.filter_by(username=username).first()
-        print(user)
         if user and user.password == password:
             session['username'] = username
             return redirect('/newpost')
