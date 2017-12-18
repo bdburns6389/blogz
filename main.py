@@ -57,8 +57,6 @@ def login():
         if user and user.password == password:
             session['username'] = username
             return redirect('/newpost')
-        
-        
         return render_template('login.html', name_error=name_error, pass_error=pass_error)
             #Work on this template.
     else:
@@ -74,7 +72,7 @@ def signup():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        verify = request.form['verify']  #Verify needs to be used somewhere. Or does it?
+        verify = request.form['verify']
 
         if len(username) < 3:
             name_error = "Username must be at least 3 characters long"
@@ -83,9 +81,8 @@ def signup():
         if verify != password:
             verify_error = "Passwords do not match"
 
-        #TODO Validate Data, using verify request data.
-
         existing_user = User.query.filter_by(username=username).first()
+        
         if not existing_user:
             new_user = User(username, password)
             db.session.add(new_user)
@@ -95,7 +92,7 @@ def signup():
         else:
             user_taken = "That username is already taken."
             return render_template('signup.html', user_taken=user_taken)
-            #Needs a place to be in signup.html
+
 
     return render_template('signup.html')
 
