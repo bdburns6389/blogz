@@ -31,13 +31,13 @@ class User(db.Model):
         self.username = username
         self.password = password
 
-@app.before_request  #Are the allowed routes correct?
+@app.before_request
 def require_login():
     allowed_routes = ['login', 'signup', 'blog', 'index',]
     if request.endpoint not in allowed_routes and 'username' not in session:
         return redirect('/login')
 
-
+#Something not working here.
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     """Taken from get-it-done, may need modification."""
@@ -82,19 +82,21 @@ def signup():
             verify_error = "Passwords do not match"
 
         existing_user = User.query.filter_by(username=username).first()
-        
-        if not existing_user:
-            new_user = User(username, password)
-            db.session.add(new_user)
-            db.session.commit()
-            session['username'] = username
-            return redirect('/')
+        #passes right through any validation.
+        if not name_error and not pass_error and not verify_error:
+            if not existing_user:
+                new_user = User(username, password)
+                db.session.add(new_user)
+                db.session.commit()
+                session['username'] = username
+                return redirect('/')
+            else:
+                user_taken = "That username is already taken."
+                return render_template('signup.html', user_taken=user_taken)
         else:
-            user_taken = "That username is already taken."
-            return render_template('signup.html', user_taken=user_taken)
-
-
-    return render_template('signup.html')
+            return render_template('signup.html', name_error=name_error, pass_error=pass_error, verify_error=verify_error)
+    else:
+        return render_template('signup.html')
 
 @app.route('/logout')
 def logout():
@@ -103,11 +105,7 @@ def logout():
 
 @app.route('/newpost', methods=['POST', 'GET'])
 def newpost():
-    #Need to add blog.owner to this route, but is it a hidden value?
     blog_owner = User.query.filter_by(username=session['username']).first()
-    #This will need to relate toSESSIONS before it will work.
-    # Make sure to use username (similar to email in the get it done video)
-    #Will also need to be put in like blog_owner=blog_owner in a .query somewhere.
     title_error = ""
     body_error = ""
     if request.method == 'POST':
