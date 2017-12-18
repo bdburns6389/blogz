@@ -47,11 +47,19 @@ def login():
         username = request.form['username']
         password = request.form['password']
         user = User.query.filter_by(username=username).first()
+        if not user:
+            name_error = 'That username does not exist'
+            return render_template('login.html', name_error=name_error)
+        if user:
+            if user.password != password:
+                pass_error = "Password Incorrect.  Please Re-enter Password"
+                return render_template('login.html', pass_error=pass_error)
         if user and user.password == password:
             session['username'] = username
             return redirect('/newpost')
-        else:
-            return render_template('login.html', name_error=name_error, pass_error=pass_error)
+        
+        
+        return render_template('login.html', name_error=name_error, pass_error=pass_error)
             #Work on this template.
     else:
         return render_template('login.html')
