@@ -53,7 +53,7 @@ def login():
         if user:
             if user.password != password:
                 pass_error = "Password Incorrect.  Please Re-enter Password"
-                return render_template('login.html', pass_error=pass_error)
+                return render_template('login.html', pass_error=pass_error, username=username)
         if user and user.password == password:
             session['username'] = username
             return redirect('/newpost')
@@ -67,10 +67,20 @@ def login():
 @app.route('/signup', methods=['POST', 'GET'])
 def signup():
     '''Taken from get-it-done, may need modification, check indentation levels.'''
+    name_error = ''
+    pass_error = ''
+    verify_error = ''
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
         verify = request.form['verify']  #Verify needs to be used somewhere. Or does it?
+
+        if len(username) < 3:
+            name_error = "Username must be at least 3 characters long"
+        if len(password) < 3:
+            pass_error = "Password must be at least 3 characters long"
+        if verify != password:
+            verify_error = "Passwords do not match"
 
         #TODO Validate Data, using verify request data.
 
