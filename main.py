@@ -70,6 +70,7 @@ def signup():
     name_error = ''
     pass_error = ''
     verify_error = ''
+    user_taken = ''
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -92,8 +93,9 @@ def signup():
             session['username'] = username
             return redirect('/')
         else:
-            #TODO message that says already exists in database
-            return '<h1>Duplicate User</h1>'
+            user_taken = "That username is already taken."
+            return render_template('signup.html', user_taken=user_taken)
+            #Needs a place to be in signup.html
 
     return render_template('signup.html')
 
