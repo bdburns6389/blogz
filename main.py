@@ -41,6 +41,8 @@ def require_login():
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     """Taken from get-it-done, may need modification."""
+    name_error = ''
+    pass_error = ''
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -49,7 +51,8 @@ def login():
             session['username'] = username
             return redirect('/newpost')
         else:
-            return '<h1>Wrong</h1>' #What should this actually return?
+            return render_template('login.html', name_error=name_error, pass_error=pass_error)
+            #Work on this template.
     else:
         return render_template('login.html')
 

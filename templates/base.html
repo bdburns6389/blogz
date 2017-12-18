@@ -9,7 +9,7 @@
             .title {
                 text-align: center;
             }
-            .right {
+            .user-account {
                 float: right;
             }
         </style>
@@ -17,11 +17,15 @@
 <body>
 
     <nav>
-        <a href='/blog'>Main Blog Page</a>
-        <span><a href='/newpost'>Add a New Entry</a></span>
-
-        <span><a href='/login'>Login</a></span>
-        <span><a href='/logout'>Logout</a></span>
+        <ul class="user-account">
+            <li><a href='/login'>Login</a></li>
+            <li><a href='/logout'>Logout</a></li>
+        </ul>
+        <ul>
+            <li><a href='/'>Home</a></li>
+            <li><a href='/blog'>Main Blog Page</a></li>
+            <li><a href='/newpost'>Add a New Entry</a></li>
+        </ul>
     </nav>
 
     {% block content %}

@@ -9,12 +9,18 @@
             <td><label for="username">Username</label></td>
             <td>
                 <input name="username" type="username" value="{{ username }}">
+                {% if name_error %}
+                    <span class='error'>{{ name_error }}</span>
+                {% endif %}
             </td>
         </tr>
         <tr>
             <td><label for="password">Password</label></td>
             <td>
                 <input name="password" type="password">
+                {% if pass_error %}
+                    <span class='error'>{{ pass_error }}</span>
+                {% endif %}
             </td>
         </tr>
     </table>
