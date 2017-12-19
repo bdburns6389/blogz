@@ -7,14 +7,12 @@
 
 
 <ul>
-    <li><a href='/blog?id={{user_entry.id}}'>{{user_entry.title}}</a></li>  <!--Links to blog site, should link to its own post site-->
+    <li><a href='/blog?user={{user_entry.id}}'>{{user_entry.title}}</a></li>
     <li>{{user_entry.body}}</li>
-    <h6>written by <a href='blog?id={{user_entry.id}}'></a></h6>
+    <h6>written by <a href='blog?user={{user_entry.username}}'></a></h6>
 
 </ul>
 
 
 
 {% endblock %}
-
-<!--Rendering page, but returning blank spaces instead of name.-->
