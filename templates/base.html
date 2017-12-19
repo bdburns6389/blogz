@@ -10,23 +10,24 @@
                 text-align: center;
             }
             .user-account {
-                float: right;
+                text-align: right;
             }
         </style>
     </head>
 <body>
 
     <nav>
-        <ul class="user-account">
-            <li><a href='/login'>Login</a></li>
-            <li><a href='/logout'>Logout</a></li>
-        </ul>
-        <ul>
-            <li><a href='/'>Home</a></li>
-            <li><a href='/blog'>Main Blog Page</a></li>
-            <li><a href='/newpost'>Add a New Entry</a></li>
-        </ul>
+        
+            
+            <span><a href='/'>Home</a></span>
+            <span><a href='/blog'>All Posts</a></span>
+            <span><a href='/newpost'>New Post</a></span>
     </nav>
+    <div class='user-account'>
+            <span><a href='/login'>Login</a></span>
+            <span><a href='/logout'>Logout</a></span>
+        
+    </div>
 
     {% block content %}
     {% endblock %}
