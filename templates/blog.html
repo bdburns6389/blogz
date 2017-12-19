@@ -8,8 +8,9 @@
 
 <ul>
     {% for entry in entries %}
-    <li><a href='/blog?id={{entry.id}}'>{{entry.title}}</a></li>  <!--Links to blog site, should link to its own post site-->
-    <li>{{entry.body}}</li>
+    <p><a href='/blog?id={{entry.id}}'>{{entry.title}}</a></p>  <!--Links to blog site, should link to its own post site-->
+    <p>{{entry.body}}</p>
+    <hr />
     {% endfor %}
 </ul>
 
