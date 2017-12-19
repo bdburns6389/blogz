@@ -144,6 +144,9 @@ def blog():
         return render_template('blog.html', entries=entries)
 
 
+    #should return template for user_post.html
+
+
 @app.route('/', methods=['POST', 'GET']) #Should be able to change to match new assignment.
 def index():
     users = User.query.all()
