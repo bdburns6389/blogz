@@ -132,7 +132,7 @@ def newpost():
         return render_template('newpost.html')
 
 # I need a redirect of User class instance with .id but where to get it?
-
+#  '/blog?user=+str(USER CLASS.id)
 @app.route('/blog', methods=['POST', 'GET'])
 def blog():
     #User_exists may not be correct, check more on this.
