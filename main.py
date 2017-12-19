@@ -47,6 +47,9 @@ def login():
         username = request.form['username']
         password = request.form['password']
         user = User.query.filter_by(username=username).first()
+        if len(username) < 1:
+            name_error = 'Please enter a username.'
+            return render_template('login.html', name_error=name_error)
         if not user:
             name_error = 'That username does not exist'
             return render_template('login.html', name_error=name_error)
