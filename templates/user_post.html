@@ -1,0 +1,20 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Blog Post</h1>
+
+
+<ul>
+    <li><a href='/blog?id={{user_entry.id}}'>{{user_entry.title}}</a></li>  <!--Links to blog site, should link to its own post site-->
+    <li>{{user_entry.body}}</li>
+    <h6>written by <a href='blog?id={{user_entry.id}}'></a></h6>
+
+</ul>
+
+
+
+{% endblock %}
+
+<!--Rendering page, but returning blank spaces instead of name.-->

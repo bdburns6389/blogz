@@ -135,10 +135,15 @@ def newpost():
 
 @app.route('/blog', methods=['POST', 'GET'])
 def blog():
+    #User_exists may not be correct, check more on this.
     id_exists = request.args.get('id')
+    user_exists = request.args.get('user')
     if id_exists:
         individual_entry = Blog.query.get(id_exists)
         return render_template('/singlepost.html', individual_entry=individual_entry)
+    if user_exists:
+        user_entry = User.query.get(user_exists)
+        return render_template('/user_post.html', user_entry=user_entry)
     else:
         entries = Blog.query.all()
         return render_template('blog.html', entries=entries)
