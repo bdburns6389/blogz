@@ -146,7 +146,8 @@ def blog():
 
 @app.route('/', methods=['POST', 'GET']) #Should be able to change to match new assignment.
 def index():
-    return render_template('index.html')
+    users = User.query.all()
+    return render_template('index.html', users=users)
 
 if __name__ == "__main__":
     app.run()
