@@ -6,12 +6,16 @@
 <h1>Blog Post</h1>
 
 
-<ul>
-    <li><a href='/blog?user={{user_entry.id}}'>{{user_entry.title}}</a></li>
-    <li>{{user_entry.body}}</li>
-    <h6>written by <a href='blog?user={{user_entry.username}}'></a></h6>
+    <ul>
+        {% for user_entry in user_entries %}
+        <li><a href='/blog?user={{user_entry.id}}'>{{user_entry.title}}</a></li>
+        <li>{{user_entry.body}}</li>
+        <h6><li>written by <a href='blog?user={{user_entry.username}}'></a></li></h6>
+        {% endfor %}
+    </ul>
 
-</ul>
+    <p>userpost</p>
+
 
 
 

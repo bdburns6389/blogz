@@ -131,25 +131,20 @@ def newpost():
     else:
         return render_template('newpost.html')
 
-# I need a redirect of User class instance with .id but where to get it?
-#  '/blog?user=+str(USER CLASS.id)
+
 @app.route('/blog', methods=['POST', 'GET'])
 def blog():
-    #User_exists may not be correct, check more on this.
     id_exists = request.args.get('id')
-    user_exists = request.args.get('user')
+    user_exists = request.args.get('username')
     if id_exists:
         individual_entry = Blog.query.get(id_exists)
         return render_template('/singlepost.html', individual_entry=individual_entry)
     if user_exists:
-        user_entry = User.query.get(user_exists)
+        user_entry = Blog.query.get(user_exists)
         return render_template('/user_post.html', user_entry=user_entry)
     else:
         entries = Blog.query.all()
         return render_template('blog.html', entries=entries)
-
-
-    #should return template for user_post.html
 
 
 @app.route('/', methods=['POST', 'GET']) #Should be able to change to match new assignment.
