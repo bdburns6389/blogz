@@ -10,6 +10,7 @@
     {% for entry in entries %}
     <p><a href='/blog?id={{entry.id}}'>{{entry.title}}</a></p>  <!--Links to blog site, should link to its own post site-->
     <p>{{entry.body}}</p>
+    <p><h6>written by {{entry.owner.username}}</h6></p>
     <hr />
     {% endfor %}
 </ul>
