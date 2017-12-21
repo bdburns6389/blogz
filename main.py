@@ -144,8 +144,11 @@ def blog():
         return render_template('/singlepost.html', individual_entry=individual_entry)
     if user_exists:
         user_entry = Blog.query.get(user_exists)  #This is a name, like brian
-        print(type(user_entry))
-        return render_template('/user_post.html', user_entry=user_entry)
+        print(user_entry)
+        owner_blog = Blog.query.filter_by(owner=user_entry).all()
+        print(1)
+        print(owner_blog)
+        return render_template('/user_post.html', owner_blog=owner_blog)
     else:
         entries = Blog.query.all()
         return render_template('blog.html', entries=entries)
