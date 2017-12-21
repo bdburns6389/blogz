@@ -140,7 +140,7 @@ def blog():
         individual_entry = Blog.query.get(id_exists)
         return render_template('/singlepost.html', individual_entry=individual_entry)
     if user_exists:
-        user_entry = Blog.query.get(user_exists)
+        user_entry = User.query.filter_by(user_exists=user_exists).all()
         return render_template('/user_post.html', user_entry=user_entry)
     else:
         entries = Blog.query.all()
