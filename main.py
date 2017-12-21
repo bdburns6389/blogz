@@ -135,12 +135,16 @@ def newpost():
 @app.route('/blog', methods=['POST', 'GET'])
 def blog():
     id_exists = request.args.get('id')
-    user_exists = request.args.get('username')
+    user_exists = request.args.get('user')
+    print(user_exists)
     if id_exists:
         individual_entry = Blog.query.get(id_exists)
+        print(1)
+        print(type(individual_entry))
         return render_template('/singlepost.html', individual_entry=individual_entry)
     if user_exists:
-        user_entry = User.query.filter_by(user_exists=user_exists).all()
+        user_entry = Blog.query.get(user_exists)  #This is a name, like brian
+        print(type(user_entry))
         return render_template('/user_post.html', user_entry=user_entry)
     else:
         entries = Blog.query.all()
