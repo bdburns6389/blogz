@@ -10,10 +10,9 @@
         {% for owner_blog in owner_blogs %}
         <li><a href='/blog?user={{owner_blog.id}}'>{{owner_blog.title}}</a></li>
         <li>{{owner_blog.body}}</li>
-        <h6><li>written by <a href='blog?user={{owner_blog.username}}'></a></li></h6>
+        <h6><li>written by <a href='blog?user={{owner_blog.owner.username}}'>{{owner_blog.owner.username}}</a></li></h6>
         {% endfor %}
     </ul>
-    {{owner_blog.body}}
     <p>user_post page</p>
 
 
