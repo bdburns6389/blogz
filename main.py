@@ -136,26 +136,33 @@ def newpost():
 def blog():
     id_exists = request.args.get('id')
     user_exists = request.args.get('user')
-    print(user_exists)
+    print(user_exists)  #Returns the name selected on home page
     if id_exists:
         individual_entry = Blog.query.get(id_exists)
-        print(1)
-        print(type(individual_entry))
         return render_template('/singlepost.html', individual_entry=individual_entry)
     if user_exists:
-        user_entry = Blog.query.get(user_exists)  #This is a name, like brian
-        print(user_entry)
-        owner_blog = Blog.query.filter_by(owner=user_entry).all()
+        #grab User query where id == username
+        #grab BLog query where owner_id == User 'id'
         print(1)
+        print(user_exists) #Username exists at this point in code ('brian')
+        user_entry = User.query.filter_by(username=user_exists).first()  #Returns none for some reason
+        print(2)
+        print(user_entry)
+        print(user_entry.username)
+        owner_blog = Blog.query.filter_by(owner=user_entry).all() #Returns an empty list for some reason
+        print(3)
         print(owner_blog)
+        print(owner_blog[0].title)
         return render_template('/user_post.html', owner_blog=owner_blog)
     else:
         entries = Blog.query.all()
         return render_template('blog.html', entries=entries)
 
 
-@app.route('/', methods=['POST', 'GET']) #Should be able to change to match new assignment.
+@app.route('/', methods=['POST', 'GET'])
 def index():
+    """Returns a List of usernames that when clicked, displays a page of the corresponding
+    blog posts of said user."""
     users = User.query.all()
     return render_template('index.html', users=users)
 
