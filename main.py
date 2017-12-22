@@ -143,19 +143,9 @@ def blog():
     if user_exists:
         #grab User query where id == username
         #grab BLog query where owner_id == User 'id'
-        print(1)
-        print(user_exists) #Username exists at this point in code ('brian')
+        #Username exists at this point in code ('brian')
         user_entry = User.query.filter_by(username=user_exists).first()  #Returns none for some reason
-        print(2)
-        print(user_entry)
-        print(user_entry.username)
-        print(user_entry.id)
-        print(user_entry.password)
         owner_blogs = Blog.query.filter_by(owner=user_entry).all() #Returns an empty list for some reason
-        print(3)
-        print(owner_blogs)
-        print(owner_blogs[0].title)
-        print(owner_blogs[0].body)
         return render_template('/user_post.html', owner_blogs=owner_blogs, owner=user_entry)
     else:
         entries = Blog.query.all()
