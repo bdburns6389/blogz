@@ -37,7 +37,7 @@ def require_login():
     if request.endpoint not in allowed_routes and 'username' not in session:
         return redirect('/login')
 
-#Something not working here.
+
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     """Taken from get-it-done, may need modification."""
@@ -61,7 +61,6 @@ def login():
             session['username'] = username
             return redirect('/newpost')
         return render_template('login.html', name_error=name_error, pass_error=pass_error)
-            #Work on this template.
     else:
         return render_template('login.html')
 
@@ -85,7 +84,6 @@ def signup():
             verify_error = "Passwords do not match"
 
         existing_user = User.query.filter_by(username=username).first()
-        #passes right through any validation.
         if not name_error and not pass_error and not verify_error:
             if not existing_user:
                 new_user = User(username, password)
