@@ -136,16 +136,12 @@ def newpost():
 def blog():
     id_exists = request.args.get('id')
     user_exists = request.args.get('user')
-    print(user_exists)  #Returns the name selected on home page
     if id_exists:
         individual_entry = Blog.query.get(id_exists)
         return render_template('/singlepost.html', individual_entry=individual_entry)
     if user_exists:
-        #grab User query where id == username
-        #grab BLog query where owner_id == User 'id'
-        #Username exists at this point in code ('brian')
-        user_entry = User.query.filter_by(username=user_exists).first()  #Returns none for some reason
-        owner_blogs = Blog.query.filter_by(owner=user_entry).all() #Returns an empty list for some reason
+        user_entry = User.query.filter_by(username=user_exists).first()
+        owner_blogs = Blog.query.filter_by(owner=user_entry).all()
         return render_template('/user_post.html', owner_blogs=owner_blogs, owner=user_entry)
     else:
         entries = Blog.query.all()
