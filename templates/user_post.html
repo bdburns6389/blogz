@@ -8,9 +8,9 @@
 
     <ul>
         {% for owner_blog in owner_blogs %}
-        <li><a href='/blog?user={{owner_blog.id}}'>{{owner_blog.title}}</a></li>
+        <li><a href='/blog?id={{owner_blog.owner.id}}'>{{owner_blog.title}}</a></li>
         <li>{{owner_blog.body}}</li>
-        <h6><li>written by <a href='blog?id={{owner_blog.owner.id}}'>{{owner_blog.owner.username}}</a></li></h6>
+        <h6><li>written by <a href='/blog?user={{owner_blog.id}}'>{{owner_blog.owner.username}}</a></li></h6>
         {% endfor %}
     </ul>
     <p>user_post page</p>
@@ -19,3 +19,7 @@
 
 
 {% endblock %}
+
+<!--Needs to link to singlepost page-->
+<!--/blog?id={{owner_blog.owner.id}}-->
+<!--/blog?user={{owner_blog.id}}
