@@ -1,35 +1,7 @@
 from flask import Flask, request, redirect, render_template, session, flash
-from flask_sqlalchemy import SQLAlchemy
+from models import User, Blog
+from app import app, db
 
-
-app = Flask(__name__)
-app.config['DEBUG'] = True
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://blogz:root@localhost:8889/blogz'
-app.config['SQLALCHEMY_ECHO'] = True
-db = SQLAlchemy(app)
-app.secret_key = 'root' #should be a better key for security purposes, but oh well, right?
-
-
-class Blog(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(120))
-    body = db.Column(db.String(1200))
-    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-
-    def __init__(self, title, body, owner):
-        self.title = title
-        self.body = body
-        self.owner = owner
-
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(120))
-    password = db.Column(db.String(120))
-    blogs = db.relationship('Blog', backref='owner')
-
-    def __init__(self, username, password):
-        self.username = username
-        self.password = password
 
 @app.before_request
 def require_login():
@@ -37,7 +9,7 @@ def require_login():
     if request.endpoint not in allowed_routes and 'username' not in session:
         return redirect('/login')
 
-#Something not working here.
+
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     """Taken from get-it-done, may need modification."""
@@ -61,7 +33,6 @@ def login():
             session['username'] = username
             return redirect('/newpost')
         return render_template('login.html', name_error=name_error, pass_error=pass_error)
-            #Work on this template.
     else:
         return render_template('login.html')
 
@@ -85,7 +56,6 @@ def signup():
             verify_error = "Passwords do not match"
 
         existing_user = User.query.filter_by(username=username).first()
-        #passes right through any validation.
         if not name_error and not pass_error and not verify_error:
             if not existing_user:
                 new_user = User(username, password)
@@ -136,23 +106,22 @@ def newpost():
 def blog():
     id_exists = request.args.get('id')
     user_exists = request.args.get('user')
-    print(user_exists)
     if id_exists:
         individual_entry = Blog.query.get(id_exists)
-        print(1)
-        print(type(individual_entry))
         return render_template('/singlepost.html', individual_entry=individual_entry)
     if user_exists:
-        user_entry = Blog.query.get(user_exists)  #This is a name, like brian
-        print(type(user_entry))
-        return render_template('/user_post.html', user_entry=user_entry)
+        user_entry = User.query.filter_by(username=user_exists).first()
+        owner_blogs = Blog.query.filter_by(owner=user_entry).all()
+        return render_template('/user_post.html', owner_blogs=owner_blogs, owner=user_entry)
     else:
         entries = Blog.query.all()
         return render_template('blog.html', entries=entries)
 
 
-@app.route('/', methods=['POST', 'GET']) #Should be able to change to match new assignment.
+@app.route('/', methods=['POST', 'GET'])
 def index():
+    """Returns a List of usernames that when clicked, displays a page of the corresponding
+    blog posts of said user."""
     users = User.query.all()
     return render_template('index.html', users=users)
 
