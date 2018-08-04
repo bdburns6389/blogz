@@ -1,0 +1,13 @@
+certifi==2017.7.27.1
+click==6.7
+Flask==0.12.2
+Flask-Material==0.1.1
+Flask-SQLAlchemy==2.3.2
+itsdangerous==0.24
+Jinja2==2.9.6
+MarkupSafe==1.0
+pipenv==2018.7.1
+PyMySQL==0.7.11
+SQLAlchemy==1.1.13
+virtualenv-clone==0.3.0
+Werkzeug==0.12.2
