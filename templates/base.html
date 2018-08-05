@@ -1,36 +1,135 @@
 <!doctype>
 <html>
-    <head>
-        <title>Blog Entry</title>
-        <style>
-            .error {
-                color: red;
-            }
-            .title {
-                text-align: center;
-            }
-            .user-account {
-                text-align: right;
-            }
-        </style>
-    </head>
+
+<head>
+    <title>Blog Entry</title>
+    <style>
+        .error {
+            color: red;
+        }
+
+        .title {
+            text-align: center;
+        }
+
+        .user-account {
+            text-align: right;
+        }
+
+        nav {
+            width: 100%;
+            background-color: transparent;
+            text-align: center;
+            margin: 0 auto;
+            list-style-type: none;
+            display: inline;
+        }
+
+        /* applied after scroll height reached */
+
+        .fixed-nav nav {
+            position: fixed;
+            top: 0;
+            z-index: 1;
+            color: white;
+            background-color: black;
+            list-style-type: none;
+            display: inline;
+        }
+    </style>
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+</head>
+
 <body>
 
-    <nav>
-        
-            
-            <span><a href='/'>Home</a></span>
-            <span><a href='/blog'>All Posts</a></span>
-            <span><a href='/newpost'>New Post</a></span>
+    <nav id="navigation">
+
+
+        <span>
+            <a href='/'>Home</a>
+        </span>
+        <span>
+            <a href='/blog'>All Posts</a>
+        </span>
+        <span>
+            <a href='/newpost'>New Post</a>
+        </span>
+
+
+        <span>
+            <a class="right" href='/login'>Login</a>
+        </span>
+        <span>
+            <a class="right" href='/logout'>Logout</a>
+        </span>
     </nav>
-    <div class='user-account'>
-            <span><a href='/login'>Login</a></span>
-            <span><a href='/logout'>Logout</a></span>
-        
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large">
+            <i class="material-icons">add</i>
+        </a>
     </div>
 
-    {% block content %}
-    {% endblock %}
 
+    {% block content %} {% endblock %}
+    <hr />
+    <br />
+    <hr />
+    <br />
+    <hr />
+    <br />
+    <hr />
+    <br />
+    <hr />
+    <br />
+    <hr />
+    <br />
+    <hr />
+    <br />
+    <hr />
+    <br />
+    <hr />
+    <br />
+    <hr />
+    <br />
+    <hr />
+    <br />
+    <hr />
+    <br />
+    <hr />
+    <br />
+    <hr />
+    <br />
+    <hr />
+    <br />
+
+    <script>
+        const nav = document.querySelector("#navigation");
+        const navTop = nav.offsetTop;
+
+        function stickyNavigation() {
+            console.log("navTop = " + navTop);
+            console.log("scrollY = " + window.scrollY);
+
+            if (window.scrollY >= navTop) {
+                // nav offsetHeight = height of nav
+                document.body.style.paddingTop = nav.offsetHeight + "px";
+                document.body.classList.add("fixed-nav");
+            } else {
+                document.body.style.paddingTop = 0;
+                document.body.classList.remove("fixed-nav");
+            }
+        }
+
+        window.addEventListener("scroll", stickyNavigation);
+    </script>
 </body>
+
 </html>

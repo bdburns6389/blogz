@@ -1,11 +1,12 @@
 from flask import Flask, request, redirect, render_template, session, flash
+from flask_material import Material
 from models import User, Blog
 from app import app, db
 
 
 @app.before_request
 def require_login():
-    allowed_routes = ['login', 'signup', 'blog', 'index',]
+    allowed_routes = ['login', 'signup', 'blog', 'index', ]
     if request.endpoint not in allowed_routes and 'username' not in session:
         return redirect('/login')
 
@@ -35,6 +36,7 @@ def login():
         return render_template('login.html', name_error=name_error, pass_error=pass_error)
     else:
         return render_template('login.html')
+
 
 @app.route('/signup', methods=['POST', 'GET'])
 def signup():
@@ -71,10 +73,12 @@ def signup():
     else:
         return render_template('signup.html')
 
+
 @app.route('/logout')
 def logout():
     del session['username']
     return redirect('/blog')
+
 
 @app.route('/newpost', methods=['POST', 'GET'])
 def newpost():
@@ -92,7 +96,8 @@ def newpost():
             new_entry = Blog(blog_title, blog_body, blog_owner)
             db.session.add(new_entry)
             db.session.commit()
-            return redirect('/blog?id='+str(new_entry.id))  #Accesses id attribute
+            # Accesses id attribute
+            return redirect('/blog?id='+str(new_entry.id))
         else:
             return render_template('/newpost.html', blog_title=blog_title,
                                    blog_body=blog_body, title_error=title_error,
@@ -124,6 +129,7 @@ def index():
     blog posts of said user."""
     users = User.query.all()
     return render_template('index.html', users=users)
+
 
 if __name__ == "__main__":
     app.run()
